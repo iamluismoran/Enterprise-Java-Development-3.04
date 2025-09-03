@@ -28,4 +28,26 @@ public class FlightBooking {
         this.flightId = flightId;
     }
 
+    // Relaciones solamente para que Hibernate genere las foreign keys en el DDL.
+    // y para poder navegar a las entidades relacionadas.
+    // Los Integer siguen siendo los dueños de los valores (insert/update).
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "customerId",
+            referencedColumnName = "customerId",
+            insertable = false,
+            updatable = false,
+            foreignKey = @ForeignKey(name = "fk_flight_booking_customer")
+    )
+    private Customer customer;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(
+            name = "flightId",
+            referencedColumnName = "flightId",
+            insertable = false,
+            updatable = false,
+            foreignKey = @ForeignKey(name = "fk_flight_booking_flight")
+    )
+    private Flight flight;
 }
